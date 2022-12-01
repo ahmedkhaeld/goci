@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+var ErrValidation = errors.New("validation failed")
 
 //stepErr represent a class of errors associated with CI steps,
 //step to record the step name in an error; a message msg that
