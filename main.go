@@ -7,6 +7,10 @@ import (
 	"os"
 )
 
+type executer interface {
+	execute() (string, error)
+}
+
 func main() {
 	proj := flag.String("p", "", "Project directory")
 	flag.Parse()
@@ -23,7 +27,7 @@ func run(proj string, out io.Writer) error {
 	}
 
 	//declare a pipeline, and init with a step
-	pipeline := make([]step, 2)
+	pipeline := make([]executer, 3)
 	pipeline[0] = newStep(
 		"go build",
 		"go",
@@ -37,6 +41,13 @@ func run(proj string, out io.Writer) error {
 		"Go Test: SUCCESS",
 		proj,
 		[]string{"test", "-v"},
+	)
+	pipeline[2] = newExceptionStep(
+		"go fmt",
+		"gofmt",
+		"Gofmt: SUCCESS",
+		proj,
+		[]string{"-l", "."},
 	)
 
 	//loop through the pipeline steps, and execute each one
