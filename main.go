@@ -28,7 +28,7 @@ func run(proj string, out io.Writer) error {
 	}
 
 	//declare a pipeline, and init with a step
-	pipeline := make([]executer, 3)
+	pipeline := make([]executer, 4)
 	pipeline[0] = newStep(
 		"go build",
 		"go",
