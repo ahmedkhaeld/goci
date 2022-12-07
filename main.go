@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 )
 
 type executer interface {
@@ -48,6 +49,14 @@ func run(proj string, out io.Writer) error {
 		"Gofmt: SUCCESS",
 		proj,
 		[]string{"-l", "."},
+	)
+	pipeline[3] = newTimeoutStep(
+		"git push",
+		"git",
+		"Git Push: SUCCESS",
+		proj,
+		[]string{"push", "origin", "master"},
+		30*time.Second,
 	)
 
 	//loop through the pipeline steps, and execute each one
