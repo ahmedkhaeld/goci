@@ -5,7 +5,10 @@ import (
 	"fmt"
 )
 
-var ErrValidation = errors.New("validation failed")
+var (
+	ErrValidation = errors.New("validation failed")
+	ErrSignal     = errors.New("received signal")
+)
 
 //stepErr represent a class of errors associated with CI steps,
 //step to record the step name in an error; a message msg that
